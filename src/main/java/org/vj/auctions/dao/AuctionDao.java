@@ -62,6 +62,7 @@ public class AuctionDao extends AbstractDao {
 	public Auction getAuction(Long auctionId) {
 		Query query = getEntityManager().createQuery("FROM Auction a WHERE a.auctionId = ?", Auction.class)
 				.setParameter(1, auctionId);
+		
 		return (Auction) query.getSingleResult();
 	}
 
