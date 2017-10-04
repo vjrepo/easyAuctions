@@ -1,5 +1,6 @@
 package org.vj.auctions.model;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,10 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.google.gson.Gson;
 
 @Entity
 @Table(name = "ITEM")
+@Cacheable(true)
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Item {
 
 	public Long getItemId() {
@@ -55,6 +61,7 @@ public class Item {
 	private String name;
 	// @Column(name = "item_details")
 	@OneToOne(cascade = CascadeType.ALL)
+	@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 	private ItemDetails itemDetails;
 	private Long basePrice;
 
