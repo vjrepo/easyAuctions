@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.vj.auctions.model.Item;
 import org.vj.auctions.service.ItemService;
 
-@RestController
+@RestController(value = "/item")
 public class ItemController {
 
 	@Autowired
