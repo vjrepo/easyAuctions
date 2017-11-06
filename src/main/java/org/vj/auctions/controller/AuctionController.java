@@ -17,8 +17,15 @@ import org.vj.auctions.response.Response;
 import org.vj.auctions.response.ResponseGenerator;
 import org.vj.auctions.service.AuctionService;
 
-@RestController(value = "/auction")
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+
+@RestController
+@RequestMapping(value = "/auction")
+@Api(value="auction", description="Auction service to search and create auctions")
 public class AuctionController {
+	
 	@Autowired
 	private AuctionService auctionService;
 
@@ -26,6 +33,7 @@ public class AuctionController {
 	private ResponseGenerator responseGenerator;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/createAuction")
+	@ApiOperation(value = "Create an auction")
 	public ResponseEntity<Response> createAuction(
 			@RequestBody(required = true) Auction auction) {
 		return responseGenerator.generateCreateAuctionResponse(auctionService
@@ -33,13 +41,16 @@ public class AuctionController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/findAuctions")
+	@ApiOperation(value = "Find auctions based on search critera")
 	public ResponseEntity<Response> searchAuctions(
+			@ApiParam(name="searchText", value="Search text", required=true)
 			@RequestParam String searchText) {
 		return responseGenerator.generateSearchAuctionsResponse(auctionService
 				.searchAuctions(searchText));
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/placeBid")
+	@ApiOperation(value = "Place a bid on the selected auction")
 	public ResponseEntity<Response> placeBid(
 			@RequestBody NewBidRequest bidRequest) throws BidTooLowException {
 		return responseGenerator.generatePleaceBidResponse(auctionService
